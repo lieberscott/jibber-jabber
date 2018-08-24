@@ -6,11 +6,7 @@ const io = require('socket.io')(http);
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html');
-});
-
-app.get('/:room', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html');
+  res.sendFile(__dirname + '/views/chat.html');
 });
 
 // listen for requests :)
@@ -27,30 +23,22 @@ io.on('connection', (socket) => {
         return;
       }
       
-      if (clients.len >= 2) {
-        socket.emit('errorMessage',"Could not join room. It's full!");
+      if (clients.length >= 2) {
+        socket.emit('errorMsg');
         return;
       }
       
-      let x = socket.join(room);
-      let id = x.id;
-      let client = clients[0];
-      console.log(clients);
-      
-      if (clients.len == 0) { // first person in room, so don't execute showFriendsFace() on client side
-        io.in(room).emit('newconnect', { id, client });
+      else if (clients.length < 2) {
+        let x = socket.join(room);
+        let id = x.id; // new socket.io ID
+        let client = clients[0]; // first person in room's socket.io id, or null if first person just joined room
+        console.log(id);
+        console.log(client);
+        io.in(room).emit('newconnect', { id, client }); // will either be { NUMBER2, null } or { NUMBER2, NUMBER1 }
       }
-      
-      else { // second person in room, so do initiate showFriendsFace() on client side
-        io.in(room).emit('newconnect', { id, client });
-      }
-      
+
     });
     
-  });
-
-  socket.on('delete symbol', (symbol) => {
-    io.emit('delete symbol', { symbol });
   });
   
   socket.on('join', (val) => {
