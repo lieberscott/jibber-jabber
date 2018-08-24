@@ -1,16 +1,30 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
 
   const yourVideo = document.getElementById("yourVideo");
   const friendsVideo = document.getElementById("friendsVideo");
   
-  // showMyFace();
+//   room = prompt('Type a room name');
+//   while (room == null || room == "") {
+//     room = prompt('Type a room name');
+//   }
+  
+//   if (room != null) {
+//     showMyFace();
+//   }
+  
+  showMyFace();
 
 });
 
-// let room = prompt('Type a room name');
-let url = window.location.href;
-let room = url.split("https://valley-drug.glitch.me/")[1];
-console.log(room);
+let room = "";
+
+  room = prompt('Type a room name');
+  while (room == null || room == "") {
+    room = prompt('Type a room name');
+  }
+
+// let url = window.location.href;
+// let room = url.split("https://valley-drug.glitch.me/")[1];
 let id = "";
 
 /* global io */
@@ -56,6 +70,12 @@ socket.on('join', (data) => {
   readMessage(data);
 });
 
+socket.on('errorMsg', () => {
+  yourVideo.srcObject = null;
+  alert("Room is full. Try another.");
+  tryNewRoom();
+});
+
 const readMessage = (data) => {
   let msg = JSON.parse(data.val.message);
   let sender = data.val.sender;
@@ -93,4 +113,12 @@ const showFriendsFace = () => {
   .then(() => {
     sendMessage(yourId, JSON.stringify({'sdp': pc.localDescription}))
   });
+}
+
+const tryNewRoom = () => {
+  room = prompt('Type a room name');
+  while (room == null || room == "") {
+    room = prompt('Type a room name');
+  }
+  showMyFace();
 }
