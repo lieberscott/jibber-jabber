@@ -1,20 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Video Chat</title>
+    <title>Video chat</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="./style.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.3.2/adapter.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
-    <script src="./client.js"></script>
+    <script src="./indexclient.js"></script>
   </head>
   <body>
-    <video id="yourVideo" autoplay muted>Stream unavailable</video>
-    <video id="friendsVideo" autoplay>Stream unavailable</video>
-    <br />
-    <button onclick="showFriendsFace()" type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Call</button>
-    <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> My face</button>
+    <div class="container container-fluid">
+      <header>
+        <h1><a href="/">vchat</a></h1>
+        <h2><a href="/">a simple video chat app</a></h2>
+      </header>
 
+      <div class="input-group mb-3 justify-content-center">
+        <input id="input" type="text" class="form-control" placeholder="Enter room name" aria-label="Enter room name" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <span class="input-group-text" id="basic-addon2" onclick=handleClick()>Enter</span>
+        </div>
+      </div>
+
+<!--       <div id="remotes" class="row">
+        <div class="col-md-6">
+          <div class="videoContainer">
+            <video id="selfVideo" oncontextmenu="return false;"></video>
+            <meter id="localVolume" class="volume" min="-45" max="-20" high="-25" low="-40"></meter>
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+    <footer>
+      <p>Hacked together by <a target="_blank" href="https://glitch.com/@scottlieber">@scottlieber</a></p>
+    </footer>
   </body>
 </html>
