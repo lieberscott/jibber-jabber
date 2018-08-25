@@ -5,8 +5,21 @@ const io = require('socket.io')(http);
 
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/chat.html');
+app.get('/:room?', (req, res) => {
+  let room = req.params.room;
+  console.log(room);
+  if (room) {
+    res.sendFile(__dirname + '/views/chat.html');
+  }
+  else {
+    res.sendFile(__dirname + '/views/index.html');
+  }
+});
+
+app.get('/chat', (req, res) => {
+  let room = req.params.room;
+  console.log(room);
+  res.sendFile(__dirname + '/views/chat.html', { room });
 });
 
 // listen for requests :)

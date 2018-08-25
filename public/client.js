@@ -13,18 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
 //   }
   
   showMyFace();
+  console.log("room : ", room);
 
 });
 
-let room = "";
 
-  room = prompt('Type a room name');
-  while (room == null || room == "") {
-    room = prompt('Type a room name');
-  }
+// let room = "";
 
-// let url = window.location.href;
-// let room = url.split("https://valley-drug.glitch.me/")[1];
+//   room = prompt('Type a room name');
+//   while (room == null || room == "") {
+//     room = prompt('Type a room name');
+//   }
+
+let url = window.location.href;
+let room = url.split("https://valley-drug.glitch.me/")[1];
 let id = "";
 
 /* global io */
