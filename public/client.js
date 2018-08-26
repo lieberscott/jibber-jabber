@@ -1,82 +1,66 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => { // launches upon page load
 
   const yourVideo = document.getElementById("yourVideo");
   const friendsVideo = document.getElementById("friendsVideo");
   
-//   room = prompt('Type a room name');
-//   while (room == null || room == "") {
-//     room = prompt('Type a room name');
-//   }
-  
-//   if (room != null) {
-//     showMyFace();
-//   }
-  
-  showMyFace();
-  console.log("room : ", room);
+  socket.emit('newconnect', room);
 
 });
-
-
-// let room = "";
-
-//   room = prompt('Type a room name');
-//   while (room == null || room == "") {
-//     room = prompt('Type a room name');
-//   }
-
-let url = window.location.href;
-let room = url.split("https://valley-drug.glitch.me/")[1];
-let id = "";
 
 /* global io */
 const socket = io();
 
+let url = window.location.href;
+let room = url.split("https://sudden-spring.glitch.me/")[1];
+let id = ""; // socket.io client id
+let friendstream;
+
 const yourId = Math.floor(Math.random()*1000000000);
-const servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'}, {'urls': 'stun:stun.l.google.com:19302'}]}; //, {'urls': 'turn:numb.viagenie.ca','credential': 'webrtc','username': 'websitebeaver@mail.com'}]};
+const servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'}, {'urls': 'stun:stun.l.google.com:19302'}]};
 const pc = new RTCPeerConnection(servers);
 
 pc.onicecandidate = ((event) => {
-  console.log("onicecandidate event : ", event);
   return event.candidate ? sendMessage(yourId, JSON.stringify({'ice': event.candidate})) : console.log("Sent All Ice");
 });
 
 pc.onaddstream = ((event) => {
-  console.log("onaddstream : ", event);
+  friendstream = event.stream;
   friendsVideo.srcObject = event.stream;
 });
 
 pc.oniceconnectionstatechange = ((e) => {
-  if (pc.iceConnectionState == 'disconnected' || pc.connectionState == 'closed' || pc.connectionState == 'closed') {
+  if (pc.iceConnectionState == 'disconnected' || pc.connectionState == 'closed' || pc.connectionState == 'failed') {
     friendsVideo.srcObject = null;
     alert("User disconnected");
   }
 });
 
-const sendMessage = (senderId, data) => {
-  socket.emit('join', { sender: senderId, message: data });
-}
-
 socket.on('newconnect', (data) => {
   if (id == "") {
     id = data.id;
+    showMyFace();
   }
   let client = data.client;
   if (client != null && client != id) {
-    showFriendsFace();
+    socket.emit('showFriendsFace', room);
   }
 });
 
+socket.on('errorMsg', () => {
+  tryNewRoom();
+});
+
 socket.on('join', (data) => {
-  console.log("senderId received : ", data);
   readMessage(data);
 });
 
-socket.on('errorMsg', () => {
-  yourVideo.srcObject = null;
-  alert("Room is full. Try another.");
-  tryNewRoom();
+socket.on('showFriendsFace', () => {
+  showFriendsFace();
 });
+
+const sendMessage = (senderId, data) => {
+  socket.emit('join', { sender: senderId, message: data, room: room });
+}
 
 const readMessage = (data) => {
   let msg = JSON.parse(data.val.message);
@@ -102,7 +86,6 @@ const showMyFace = () => {
   .then((s) => yourVideo.srcObject = s)
   .then((stream) => {
     pc.addStream(stream);
-    socket.emit('newconnect', room);
   })
   .catch((err) => console.log(err));
 }
@@ -118,9 +101,15 @@ const showFriendsFace = () => {
 }
 
 const tryNewRoom = () => {
-  room = prompt('Type a room name');
-  while (room == null || room == "") {
-    room = prompt('Type a room name');
-  }
-  showMyFace();
+  alert("Room is full. You will be redirected to home page.");
+  location = "/";
 }
+
+const disconnect = () => {
+  pc.close();
+  friendsVideo.srcObject = null;
+}
+
+// const reconnect = () => {
+//   friendsVideo.srcObject = friendstream;
+// }
