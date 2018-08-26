@@ -22,7 +22,7 @@ header {
 }
 
 header h1, header h2 {         
-  display: inline;             
+  display: block;             
 }
 
 header h1 a, header h2 a, header h1 a:hover, header h2 a:hover {                                                              
@@ -53,4 +53,10 @@ video {
 
 #basic-addon2 {
   cursor: pointer;
+}
+
+.center {
+  display: block;
+  margin: 0 auto;
+  width: 665px;
 }

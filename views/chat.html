@@ -12,14 +12,16 @@
   <body>
     <div class="container container-fluid">
       <header>
-        <h1><a href="/">vchat</a></h1>
+        <h1><a href="/">jibber-jabber</a></h1>
         <h2><a href="/">a simple video chat app</a></h2>
-        <p>Video will automatically connect when two people are in the room</p>
+        <p>Chat will automatically connect when two people are in the room</p>
       </header>
-      <video id="yourVideo" autoplay muted>Stream unavailable</video>
-      <video id="friendsVideo" autoplay>Stream unavailable</video>
-      <br />
-      <button onclick="newRoom()" type="button" class="btn btn-primary btn-lg">Choose a different room</button>
+      <div class="center">
+        <video id="yourVideo" autoplay muted>Stream unavailable</video>
+        <video id="friendsVideo" autoplay>Stream unavailable</video>
+        <br />
+        <button onclick="newRoom()" type="button" class="btn btn-primary btn-lg">Choose a different room</button>
+      </div>
     </div>
   </body>
 </html>
