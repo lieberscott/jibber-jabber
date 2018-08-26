@@ -8,7 +8,6 @@ app.use(express.static('public'));
 app.get('/:room?', (req, res) => {
   let room = req.params.room;
   if (room == "favicon.ico") { room = undefined } // not sure why favicon.ico is coming through by default, but it is!
-  console.log("room1 : ", room);
   if (room) {
     res.sendFile(__dirname + '/views/chat.html');
   }
@@ -48,11 +47,6 @@ io.on('connection', (socket) => {
     });
     
   });
-  
-  // socket.on('disconnect', (data) => {
-  //   let room = data.room;
-  //   socket.leave(room);
-  // });
 
   socket.on('join', (val) => {
     let room = val.room;
