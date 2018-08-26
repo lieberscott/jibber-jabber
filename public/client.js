@@ -13,23 +13,21 @@ const socket = io();
 let url = window.location.href;
 let room = url.split("https://sudden-spring.glitch.me/")[1];
 let id = ""; // socket.io client id
-let friendstream;
 
-const yourId = Math.floor(Math.random()*1000000000);
+let yourId = Math.floor(Math.random()*1000000000);
 const servers = {'iceServers': [{'urls': 'stun:stun.services.mozilla.com'}, {'urls': 'stun:stun.l.google.com:19302'}]};
-const pc = new RTCPeerConnection(servers);
+let pc = new RTCPeerConnection(servers);
 
 pc.onicecandidate = ((event) => {
   return event.candidate ? sendMessage(yourId, JSON.stringify({'ice': event.candidate})) : console.log("Sent All Ice");
 });
 
 pc.onaddstream = ((event) => {
-  friendstream = event.stream;
   friendsVideo.srcObject = event.stream;
 });
 
 pc.oniceconnectionstatechange = ((e) => {
-  if (pc.iceConnectionState == 'disconnected' || pc.connectionState == 'closed' || pc.connectionState == 'failed') {
+  if (pc.iceConnectionState == 'disconnected' || pc.iceConnectionState == 'closed' || pc.iceConnectionState == 'failed') {
     friendsVideo.srcObject = null;
     alert("User disconnected");
   }
@@ -105,11 +103,7 @@ const tryNewRoom = () => {
   location = "/";
 }
 
-const disconnect = () => {
-  pc.close();
-  friendsVideo.srcObject = null;
+const newRoom = () => {
+  let room = prompt("Enter a new room");
+  location = "/" + room;
 }
-
-// const reconnect = () => {
-//   friendsVideo.srcObject = friendstream;
-// }

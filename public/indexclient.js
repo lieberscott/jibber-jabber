@@ -1,8 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-
-});
-
 const handleClick = () => {
   let room = document.getElementById("input").value;
   

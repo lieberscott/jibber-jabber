@@ -10,11 +10,16 @@
     <script src="./client.js"></script>
   </head>
   <body>
-    <video id="yourVideo" autoplay muted>Stream unavailable</video>
-    <video id="friendsVideo" autoplay>Stream unavailable</video>
-    <br />
-    <button onclick="disconnect()" type="button" class="btn btn-primary btn-lg">Disconnect</button>
-    <button onclick="reconnect()" type="button" class="btn btn-primary btn-lg">Reconnect</button>
-
+    <div class="container container-fluid">
+      <header>
+        <h1><a href="/">vchat</a></h1>
+        <h2><a href="/">a simple video chat app</a></h2>
+        <p>Video will automatically connect when two people are in the room</p>
+      </header>
+      <video id="yourVideo" autoplay muted>Stream unavailable</video>
+      <video id="friendsVideo" autoplay>Stream unavailable</video>
+      <br />
+      <button onclick="newRoom()" type="button" class="btn btn-primary btn-lg">Choose a different room</button>
+    </div>
   </body>
 </html>
