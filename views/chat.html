@@ -3,7 +3,7 @@
   <head>
     <title>Video Chat</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<!--     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="./style.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.3.2/adapter.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js"></script>
@@ -13,8 +13,8 @@
     <video id="yourVideo" autoplay muted>Stream unavailable</video>
     <video id="friendsVideo" autoplay>Stream unavailable</video>
     <br />
-    <button onclick="showFriendsFace()" type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> Call</button>
-    <button type="button" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> My face</button>
+    <button onclick="disconnect()" type="button" class="btn btn-primary btn-lg">Disconnect</button>
+    <button onclick="reconnect()" type="button" class="btn btn-primary btn-lg">Reconnect</button>
 
   </body>
 </html>
