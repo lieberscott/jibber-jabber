@@ -104,6 +104,6 @@ const tryNewRoom = () => {
 }
 
 const newRoom = () => {
-  let room = prompt("Enter a new room");
+  let room = prompt("Enter a new room") || room;
   location = "/" + room;
 }
