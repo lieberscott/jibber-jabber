@@ -13,6 +13,8 @@ Your Project
 
 On the front-end,
 - Maximum of two people in a room at once
+- Simply enter a room by going to https://jibber-jabber.glitch.me/{room_name}
+- Video will connect automatically when two people are in the room
 
 On the back-end,
 - your app starts at `server.js`
